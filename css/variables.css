@@ -1,0 +1,15 @@
+/* colors */
+:root {
+    --background: #232429;
+    --white: #FFF;
+    --almost-white: rgb(243, 252, 252);
+    --orange-bg-color: rgb(252, 143, 30);
+    --text-black: rgb(35, 36, 41);
+    --bg-with-opacity-color: rgba(35, 36, 41, 0.61);
+    --white-half-opacity: rgba(255, 255, 255, 0.5);
+    --footer-bg: #1C171A;
+
+    --default-font: 'Montserrat', sans-serif;
+
+    --bottom-margin: 0 0 20px 0;
+}
