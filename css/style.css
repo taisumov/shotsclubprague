@@ -1262,6 +1262,56 @@ h3 {
         padding: 10px;
     }
 
+    .cookie-description {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        & h5 {
+            margin: 0;
+        }
+
+        & p {
+            margin: 0;
+        }
+    }
+
+    .before-table {
+        background-color: var(--white);
+        color: var(--text-black);
+        padding: 15px;
+        font-weight: bold;
+    }
+
+    .details-table-row {
+        display: contents;
+    }
+
+    .details-table {
+        font-family: 'Inter', sans-serif;
+        padding: 0;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        color: var(--text-black);
+        font-size: 14px;
+        gap: 1px;
+        background-color: rgb(213, 213, 213);
+        border: 1px solid rgb(213, 213, 213);
+    }
+
+    .details-table-header {
+        display: contents;
+        font-weight: bold;
+        & div {
+            background-color: #F7F7F7;
+        }
+    }
+
+    .details-table-body {
+        display: contents;
+        & div {
+            background-color: var(--white);
+        }
+    }
+
     summary {
         background-color: rgba(239, 239, 239, 0.5);
         font-family: 'Inter', sans-serif;
