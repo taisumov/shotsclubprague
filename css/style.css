@@ -175,11 +175,7 @@ h3 {
     display: grid;
     place-content: center;
     padding: 12px 24px;
-    width: -webkit-max-content;
-    width: -moz-max-content;
     width: max-content;
-    height: -webkit-fit-content;
-    height: -moz-fit-content;
     height: fit-content;
     -webkit-transition: .2s ease-in;
     -o-transition: .2s ease-in;
@@ -195,14 +191,12 @@ h3 {
     position: relative;
     display: -ms-grid;
     display: grid;
-    -ms-grid-columns: (1fr) [ 4 ];
     grid-template-columns: repeat(4, 1fr);
 }
 
 @media (max-width: 800px) {
     .main-pictures {
         height: 600px;
-        -ms-grid-columns: (1fr) [ 2 ];
         grid-template-columns: repeat(2, 1fr);
     }
 }
@@ -223,8 +217,6 @@ h3 {
         text-align: center;
         font-weight: 700;
         font-size: 60px;
-        width: -webkit-max-content;
-        width: -moz-max-content;
         width: max-content;
         display: block;
     }
@@ -284,8 +276,6 @@ h3 {
 
     h6 {
         cursor: pointer;
-        height: -webkit-min-content;
-        height: -moz-min-content;
         height: min-content;
         margin: 0;
         color: var(--almost-white);
@@ -491,8 +481,6 @@ h3 {
 }
 
 .button {
-    width: -webkit-fit-content;
-    width: -moz-fit-content;
     width: fit-content;
     display: -webkit-box;
     display: -ms-flexbox;
@@ -751,7 +739,6 @@ h3 {
     .events-list {
         display: -ms-grid;
         display: grid;
-        -ms-grid-columns: (1fr) [ 2 ];
         grid-template-columns: repeat(2, 1fr);
     }
 }
@@ -820,14 +807,14 @@ h3 {
     display: -ms-grid;
     display: grid;
     -ms-grid-columns: 1fr 15px 1fr;
-    /*grid-template-columns: repeat(2, 1fr);*/
+    grid-template-columns: repeat(2, 1fr);
     grid-gap: 15px;
 }
 
 @media (max-width: 800px) {
     .form-first-row {
         -ms-grid-columns: 1fr;
-        /*grid-template-columns: 1fr;*/
+        grid-template-columns: 1fr;
         gap: 10px;
     }
 }
@@ -846,8 +833,6 @@ h3 {
 
 .submit-btn {
     cursor: pointer;
-    width: -webkit-min-content;
-    width: -moz-min-content;
     width: min-content;
     background-color: var(--orange-bg-color);
     color: var(--text-black);
