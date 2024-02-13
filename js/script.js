@@ -28,28 +28,57 @@ const images = [
     'img_26.png',
     'img_27.png',
 ];
+const links = [
+    ...Array.from(document.querySelectorAll('.nav-list__item')),
+    ...Array.from(document.querySelectorAll('.main-picture-link'))
+];
+
+const blocksToObserve = links.map(link => document.querySelector(link.dataset.linkTo))
+
+// Опции для Intersection Observer
+const options = {
+    root: null,
+    rootMargin: '0px',
+    threshold: 0.5 // Порог пересечения в 50%
+};
+
+// Функция, которая будет выполнена при пересечении наблюдаемого элемента с областью просмотра
+const handleIntersection = (entries, observer) => {
+    entries.forEach(entry => {
+        const link = document.querySelector(`li[data-link-to="#${entry.target.id}"]`)
+        if (entry.isIntersecting) {
+            link.style.color = 'var(--orange-bg-color)';
+        } else {
+            link.style.color = 'var(--white)';
+        }
+    });
+};
+
+const observer = new IntersectionObserver(handleIntersection, options);
+
+blocksToObserve.map(block => observer.observe(block))
+
+const linksWithBottom = [...links, ...Array.from(document.querySelectorAll('.bottom-nav-list__item'))]
+
+linksWithBottom.map(link => link.addEventListener('click', () => {
+    const linkTo = document.querySelector(link.dataset.linkTo);
+    const linkToPosition = linkTo.getBoundingClientRect().top - document.body.getBoundingClientRect().top;
+
+    const offset = window.matchMedia("(max-width: 800px)").matches ? 0 : 100
+
+    console.log(linkToPosition);
+    window.scrollTo({
+        top: linkToPosition - offset,
+        behavior: 'smooth'
+    })
+}))
 
 // You can also pass an optional settings object
 // below listed default settings
 AOS.init({
-    // Global settings:
-    disable: false, // accepts following values: 'phone', 'tablet', 'mobile', boolean, expression or function
-    startEvent: 'DOMContentLoaded', // name of the event dispatched on the document, that AOS should initialize on
-    initClassName: 'aos-init', // class applied after initialization
-    animatedClassName: 'aos-animate', // class applied on animation
-    useClassNames: false, // if true, will add content of `data-aos` as classes on scroll
-    disableMutationObserver: false, // disables automatic mutations' detections (advanced)
-    debounceDelay: 50, // the delay on debounce used while resizing window (advanced)
-    throttleDelay: 99, // the delay on throttle used while scrolling the page (advanced)
-
-
-    // Settings that can be overridden on per-element basis, by `data-aos-*` attributes:
     offset: 120, // offset (in px) from the original trigger point
-    delay: 0, // values from 0 to 3000, with step 50ms
-    duration: 400, // values from 0 to 3000, with step 50ms
     easing: 'ease', // default easing for AOS animations
     once: true, // whether animation should happen only once - while scrolling down
-    mirror: false, // whether elements should animate out while scrolling past them
     anchorPlacement: 'top-bottom', // defines which position of the element regarding to window should trigger the animation
 
 });
@@ -59,9 +88,12 @@ const cocktailSwiper = new Swiper('.cocktail-swiper', {
     autoplay: {
         delay: 5000,
     },
-    slidesPerView: 2,
+    slidesPerView: 1,
     spaceBetween: 0,
     breakpoints: {
+        600: {
+            slidesPerView: 2,
+        },
         1024: {
             slidesPerView: 5,
             spaceBetween: 100,
@@ -81,9 +113,12 @@ const gallerySwiper = new Swiper('.gallery-swiper', {
     },
 })
 
-gallerySwiper.on('slideChange', function (swiper) {
-    document.querySelector('.gallery-counter').innerHTML = `${swiper.activeIndex + 1} / ${images.length}`;
-})
+function updateCounter(swiper) {
+    document.querySelector('.modal-counter').innerText = `${swiper.activeIndex + 1} / ${images.length}`;
+}
+
+gallerySwiper.on('init', updateCounter)
+gallerySwiper.on('slideChange', updateCounter)
 
 const galleryElement = document.querySelector('.gallery');
 const gallerySwiperWrapperElement = document.querySelector('.gallery-swiper .swiper-wrapper');
@@ -94,11 +129,16 @@ images.map((imageName, index) => {
     const photoElement = document.createElement('img');
     newPhoto.className = 'gallery-item';
     photoElement.src = `./img/gallery/${imageName}`;
+    newPhoto.dataset.aos = 'zoom-in';
+    newPhoto.dataset.aosDelay = `${300 + index * 10}`;
+
     newPhoto.appendChild(photoElement);
 
     newPhoto.onclick = () => {
         gallerySwiper.slideTo(index);
+        document.body.classList.add('modal-open');
         galleryModalElement.style.display = 'block';
+        galleryModalElement.style.scale = '1';
     }
 
     galleryElement.appendChild(newPhoto);
@@ -120,3 +160,40 @@ images.map((imageName, index) => {
 
     gallerySwiperWrapperElement.appendChild(newPhoto);
 });
+
+// Фуллскрин для просмотра галереи
+document.querySelector('#fullscreen').addEventListener("click", function (event) {
+    document.querySelector(".gallery-modal").requestFullscreen();
+
+    document.querySelector('#fullscreen').style.display = 'none';
+    document.querySelector('#fullscreen-close').style.display = 'inline';
+})
+document.querySelector('#fullscreen-close').addEventListener("click", function (event) {
+    if (document.fullscreenElement) {
+        document.exitFullscreen();
+
+        document.querySelector('#fullscreen').style.display = 'inline';
+        document.querySelector('#fullscreen-close').style.display = 'none';
+        return;
+    }
+})
+
+// Увеличение/уменьшение изображения
+document.querySelector('#zoom-button').addEventListener('click', () => {
+    const isZoom = gallerySwiper.zoom.scale;
+    console.log(isZoom)
+    gallerySwiper.zoom.toggle(isZoom === 1);
+    document.querySelector('#zoom-plus').style.display = isZoom === 1 ? 'none' : 'inline';
+    document.querySelector('#zoom-minus').style.display = isZoom === 1 ? 'inline' : 'none';
+});
+
+// Закрытие модального окна
+document.querySelector('#close').addEventListener('click', () => {
+    if (document.fullscreenElement) {
+        document.exitFullscreen();
+        return;
+    }
+    document.body.classList.remove('modal-open');
+    galleryModalElement.style.display = 'none';
+    galleryModalElement.style.scale = '0';
+})

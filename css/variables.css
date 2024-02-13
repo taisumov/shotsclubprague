@@ -12,4 +12,10 @@
     --default-font: 'Montserrat', sans-serif;
 
     --bottom-margin: 0 0 20px 0;
+
+    --gallery-grid-columns: 7;
+    @media(max-width: 1024px) {--gallery-grid-columns: 4;}
+    @media(max-width: 800px) {--gallery-grid-columns: 3;}
+
+    --swiper-navigation-color: var(--almost-white);
 }
