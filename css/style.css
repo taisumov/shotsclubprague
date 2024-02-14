@@ -1,14 +1,9 @@
-/*
-* Prefixed by https://autoprefixer.github.io
-* PostCSS: v8.4.14,
-* Autoprefixer: v10.4.7
-* Browsers: last 4 version
-*/
-
 @import url('./variables.css');
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Koulen&family=Montserrat:wght@400;500;600&display=swap');
 
 body {
+    -webkit-tap-highlight-color: transparent;
+
     background: var(--background);
     color: var(--white);
     font-family: var(--default-font);
@@ -88,7 +83,17 @@ h3 {
         padding-bottom: 0;
     }
 
-    .nav {
+    .center-content {
+        padding-right: 30px;
+    }
+
+    .hide-on-1280 {
+        display: none;
+    }
+}
+
+@media (max-width: 900px) {
+    .hide-on-900 {
         display: none;
     }
 }
@@ -96,6 +101,10 @@ h3 {
 @media (max-width: 800px) {
     .header {
         display: none;
+    }
+
+    .center-content {
+        padding: 0;
     }
 }
 
@@ -180,6 +189,12 @@ h3 {
     -webkit-transition: .2s ease-in;
     -o-transition: .2s ease-in;
     transition: .2s ease-in;
+}
+
+@media (max-width: 900px) {
+    .button-to-go {
+        padding: 12px;
+    }
 }
 
 .button-to-go:hover {
@@ -753,10 +768,22 @@ h3 {
 
 .event-item {
     padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    transition: .4s;
 
     & a {
         font-family: 'Koulen', sans-serif;
         color: var(--almost-white);
+        transition: .4s;
+    }
+}
+
+.event-item:hover {
+    scale: .95;
+    & a {
+        color: var(--hover-link-color);
     }
 }
 
@@ -811,7 +838,7 @@ h3 {
     grid-gap: 15px;
 }
 
-@media (max-width: 800px) {
+@media (max-width: 1280px) {
     .form-first-row {
         -ms-grid-columns: 1fr;
         grid-template-columns: 1fr;
@@ -863,6 +890,11 @@ h3 {
 .inline-link {
     color: var(--orange-bg-color);
     font-family: 'Koulen', sans-serif;
+    transition: .4s;
+}
+
+.inline-link:hover {
+    color: var(--hover-link-color);
 }
 
 .inline-link-with-icon::after {
@@ -953,6 +985,30 @@ h3 {
     }
 }
 
+@media (max-width: 1280px) {
+    .footer-columns {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0;
+    }
+
+    .info {
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .footer-logo {
+        width: 50%;
+        margin: 0;
+
+        img {
+            max-width: 100%;
+        }
+    }
+}
+
 .footer-logo-img {
     width: 100%;
     max-width: 85%;
@@ -980,25 +1036,23 @@ h3 {
     width: 40px;
 }
 
+@media (max-width: 1280px) {
+    .divider-short {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+    }
+}
+
 .bottom-navigation {
     width: 100%;
     display: -ms-grid;
     display: grid;
     -ms-grid-columns: 3fr 4fr 4fr;
     grid-template-columns: 3fr 4fr 4fr;
-}
-
-@media (max-width: 1280px) {
-    .bottom-navigation {
-        -ms-grid-columns: 1fr;
-        grid-template-columns: 1fr;
-    }
-}
-
-@media (max-width: 800px) {
-    .bottom-navigation {
-        display: none;
-    }
 }
 
 .bottom-nav-list {
@@ -1018,6 +1072,9 @@ h3 {
     padding: 13px 20px 13px 0;
     line-height: 25px;
     cursor: pointer;
+    -webkit-transition: .4s;
+    -o-transition: .4s;
+    transition: .4s;
 
     & a {
         font-size: 17px;
@@ -1034,18 +1091,29 @@ h3 {
 }
 
 @media (max-width: 1280px) {
-    .nav-column:nth-child(1), .nav-column:nth-child(2) {
-        display: none;
+    .bottom-navigation {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .nav-column {
+        text-align: center;
+    }
+
+    .bottom-nav-list__item {
+        padding-right: 0;
     }
 }
 
 @media (max-width: 800px) {
-    .nav-column:nth-child(3) {
-        display: none;
+    .bottom-navigation {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+        gap: 35px;
     }
 }
 
-.bottom-nav-list__item a:hover {
+.bottom-nav-list__item:hover, .bottom-nav-list__item a:hover {
     color: var(--orange-bg-color);
 }
 
